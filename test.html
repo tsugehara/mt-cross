@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<title>Test for Mersenne Twister</title>
+<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-git.css">
+<script type="text/javascript" src="jquery-1.8.3.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-git.js"></script>
+<script type="text/javascript" src="js/mt.js"></script>
+</head>
+<body>
+<div>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+<script type="text/javascript">
+asyncTest("nextInt-1-1", function() {
+	var mt = new MT(1);
+	var r = mt.nextInt(1, 100);
+	$.get(
+		"nextInt.php?min=1&max=100&seed=1",
+		function(ret) {
+			start();
+			deepEqual (r, parseInt(ret));
+		}
+	);
+});
+asyncTest("nextInt-1-2", function() {
+	var mt = new MT(1);
+	mt.nextInt(1, 100);
+	var r = mt.nextInt(1, 100);
+	$.get(
+		"nextInt.php?min=1&max=100&seed=1&cnt=2",
+		function(ret) {
+			start();
+			deepEqual (r, parseInt(ret));
+		}
+	);
+});
+asyncTest("nextInt-2-1", function() {
+	var mt = new MT(2);
+	var r = mt.nextInt(1, 100);
+	$.get(
+		"nextInt.php?min=1&max=100&seed=2",
+		function(ret) {
+			start();
+			deepEqual (r, parseInt(ret));
+		}
+	);
+});
+asyncTest("nextInt-2-2", function() {
+	var mt = new MT(2);
+	mt.nextInt(1, 100);
+	var r = mt.nextInt(1, 100);
+	$.get(
+		"nextInt.php?min=1&max=100&seed=2&cnt=2",
+		function(ret) {
+			start();
+			deepEqual (r, parseInt(ret));
+		}
+	);
+});
+
+asyncTest("next-1-1", function() {
+	var mt = new MT(1);
+	var r = mt.next();
+	$.get(
+		"next.php?seed=1",
+		function(ret) {
+			start();
+			deepEqual (r.toString(), ret);
+		}
+	);
+});
+asyncTest("next-1-2", function() {
+	var mt = new MT(1);
+	mt.nextInt(1, 100);
+	var r = mt.next();
+	$.get(
+		"next.php?seed=1&cnt=2",
+		function(ret) {
+			start();
+			deepEqual (r.toString(), ret);
+		}
+	);
+});
+asyncTest("next-2-1", function() {
+	var mt = new MT(2);
+	var r = mt.next();
+	$.get(
+		"next.php?seed=2",
+		function(ret) {
+			start();
+			deepEqual (r.toString(), ret);
+		}
+	);
+});
+asyncTest("next-2-2", function() {
+	var mt = new MT(2);
+	mt.next();
+	var r = mt.next();
+	$.get(
+		"next.php?seed=2&cnt=2",
+		function(ret) {
+			start();
+			deepEqual (r.toString(), ret);
+		}
+	);
+});
+
+</script>
+</div>
+</body>
+</html>
